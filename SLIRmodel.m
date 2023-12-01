@@ -17,7 +17,7 @@
 
 function [dydt] = SLIRmodel(time,y,p,T)
     
-    t = abs(int16(round(time * (1/p(7)))));
+    t = time * (1/p(7));
     
     % temperature
     if T(t) > 0 || T(t) < 35
@@ -28,8 +28,7 @@ function [dydt] = SLIRmodel(time,y,p,T)
     Te = -0.35968 + 0.10789 * T(t) + 0.00214*T(t)^2;
     
     % day
-    num = t / 20;
-    tday = floor(num)+1;
+    tday = t;
 
     %assign parameters
     beta = Tb * p(1);

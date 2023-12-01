@@ -33,15 +33,6 @@
 function [S,L,I,R,P,Pb,time] = PathogenGrowth_0D(S_i,L_i,I_i,R_i,P_i,Pb_i,beta,mu_L,...
     mu_I,k,e,Ap,T,days,dt)
 
-% % temperature
-% if T(t) > 0 || T(t) < 35
-%     Tb = 0.000214 * T(t)^(2.06737) * (35 - T(t))^(0.72859);
-% else
-%     Tb = 0;
-% end
-% Te = -0.35968 + 0.10789 * T(t) + 0.00214*T(t)^2;
-
-
 % derived running conditions
 Nsteps = ceil(days/dt); % has 1200 steps
 time = (1:Nsteps-1)*dt;

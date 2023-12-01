@@ -68,9 +68,9 @@ function [t, y] = euler(odefun, tspan, y0)
     for idx = 1:(num_times-1)
         % Calculate slopes at current time
         yprime = zeros(length(y0),1);
-        for i = 1:num_states
-            yprime(i) = RK4(odefun(t(idx), y(idx,:)),y0(i),t');
-        end
+        
+        yprime(:) = RK4(@(t,y)odefun(t, y),y0(:),idx);
+        
 %yprime(:) = odefun(t(idx),y(idx,:));
         % Calculate next state
         dt = tspan(idx+1) - tspan(idx);
