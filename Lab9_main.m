@@ -71,7 +71,12 @@ e    = 0.005; %rate of introduction from external sources
 
 [S,L,I,R,P,Pb,time] = PathogenGrowth_0D(S_i,L_i,I_i,R_i,P_i,Pb_i,beta,mu_L,mu_I,k,e,Ap,T,days,dt)
 
-
+plot(time,S);
+hold on;
+plot(time,L);
+plot(time,I);
+plot(time,R);
+plot(time,Pb);
 
 
 

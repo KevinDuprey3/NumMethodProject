@@ -17,7 +17,7 @@
 
 function [dydt] = SLIRmodel(time,y,p,T)
     
-    t = time * (1/p(7));
+    t = floor(time);
     
     % temperature
     if T(t) > 0 || T(t) < 35
