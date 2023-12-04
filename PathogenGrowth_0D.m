@@ -30,8 +30,8 @@
 % days (number of days to simulate); dt (time step,fraction of a day)
 % output: S,I,R,time (vector of simulation times)
 
-function [S,L,I,R,P,Pb,time] = PathogenGrowth_0D(S_i,L_i,I_i,R_i,P_i,Pb_i,beta,mu_L,...
-    mu_I,k,e,Ap,T,days,dt)
+function [S,L,I,R,P,Pb,time] = PathogenGrowth_0D(S_i,L_i,I_i,R_i,P_i,Pb_i,beta,...
+    mu_I,k,e,Ap,mu_L_min,T,days,dt)
 
 % derived running conditions
 Nsteps = ceil(days/dt); % has 1200 steps
@@ -40,7 +40,7 @@ time = (1:Nsteps-1)*dt;
 
 % set parameters
 p(1) = beta; %(rate of new infections)
-p(2) = mu_L; %(inverse length of latent period in days)
+p(2) = mu_L_min; %(inverse length of latent period in days) calculated later
 p(3) = mu_I; %(inverse length of the infectious period in days)
 p(4) = k;    %(population growth rate)
 p(5) = e;    %(rate of new infections from external sources)
@@ -61,7 +61,7 @@ y0(5) = P_i; %(initial population fraction)
 y0(6) = Pb_i;%(initial berry population fraction)
 
 % integrate using Euler's method
-[~,dydt] = euler(odefun,time,y0');
+dydt = RK4(odefun,y0,time);
 
 % set outputs
 S = dydt(:,1);

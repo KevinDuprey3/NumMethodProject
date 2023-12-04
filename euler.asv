@@ -65,16 +65,17 @@ function [t, y] = euler(odefun, tspan, y0)
     y(1,:) = y0;
 
     % Assign other rows of output
-    for idx = 1:(num_times-1)
+    for idx = 2:(num_times)%STOLL CHANGE
         % Calculate slopes at current time
-        yprime = zeros(length(y0),1);
-        for i = 1:num_states
-            yprime(i) = RK4(odefun(idx, y(idx,:)),y0(i),tspan);
-        end
+%        yprime = zeros(length(y0),1);
+        
+        yprime = RK4(@(t,y)odefun(t, y),y(idx-1,:),idx); % find the derivatives %STOLL CHANGE
+        yprime = odefun(idx,y(idx-1,:));   
+
         % Calculate next state
-        dt = tspan(idx+1) - tspan(idx);
-        y(idx+1,:) = y(idx,:) + yprime * dt;
-        t(idx+1) = tspan(idx+1);
+        dt = tspan(idx) - tspan(idx-1);
+        y(idx,:) = y(idx-1,:) + (yprime(:)' * dt); 
+        t(idx) = tspan(idx);
 
     end % idx
 
