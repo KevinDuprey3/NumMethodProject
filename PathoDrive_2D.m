@@ -101,8 +101,8 @@ hold on;
 plot(tspan,L_ave);
 plot(tspan,I_ave)
 plot(tspan,R_ave);
-plot(tspan,P_ave/10000);
-plot(tspan,B_ave/10000);
+plot(tspan,P_ave/A);
+plot(tspan,B_ave/A);
 plot(tspan,E_ave);
 plot(tspan,F_ave);
 legend('Susceptible','Latent','Infected','Removed','Population','Berries','External','Fungal Spores','Location','NorthWest');

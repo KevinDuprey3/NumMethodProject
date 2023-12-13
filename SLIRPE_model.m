@@ -57,7 +57,7 @@ function [dydt] = SLIRPE_model(idx,y0,e,mu_L,p)
     %calculated parameters
     if(ceil(idx)==floor(idx)) %when we are at an interger step
         T_used = T(idx);
-        day_used = day(idx);
+        day_used = day(idx)+30;
         mu_L_used = mu_L(idx);
         m_used = Windspd(idx);
     else %when we are at a half step (for rk4)
