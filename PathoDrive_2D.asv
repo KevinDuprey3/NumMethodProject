@@ -53,7 +53,7 @@ for i=1:NpX
         cnt = i+(j-1)*NpX; %counter to vectorize vine 
         vine(cnt).X = i*LpX-0.5; %x-position of the center of a vine in meters
         vine(cnt).Y = j*LpY-0.5; %y-position of the center of a vine in meters
-        vine(cnt).P(1) = (P_i_ave+P_i_std*randn)/100; %initial population size (random around the average)
+        vine(cnt).P(1) = (P_i_ave+P_i_std*randn); %initial population size (random around the average)
         vine(cnt).B(1) = 1;        %initial size of the berry population (assumed small (1cm^2))
         vine(cnt).S(1) = vine(cnt).P(1)/A;    %initial size of the susceptible population (normalized)
         vine(cnt).L(1) = 0;        %initial fraction of the population that is latent
@@ -71,7 +71,7 @@ vine(RandV).L(1) = 0.25^2/4*pi/A;
 
 % call the pathogen function
 tic
-[vine]=PathogenGrowth_2D(vine,beta_max,mu_L_min,mu_I,A,eta,kappa,xi,Gamma,...
+[vine,cost,timeDetect]=PathogenGrowth_2D(vine,beta_max,mu_L_min,mu_I,A,eta,kappa,xi,Gamma,...
     alpha,T,U,V,tspan);
 toc 
 
@@ -101,8 +101,8 @@ hold on;
 plot(tspan,L_ave);
 plot(tspan,I_ave)
 plot(tspan,R_ave);
-plot(tspan,P_ave);
-plot(tspan,B_ave);
+plot(tspan,P_ave/A);
+plot(tspan,B_ave/A);
 plot(tspan,E_ave);
 plot(tspan,F_ave);
 legend('Susceptible','Latent','Infected','Removed','Population','Berries','External','Fungal Spores','Location','NorthWest');
