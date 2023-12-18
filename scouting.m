@@ -1,7 +1,7 @@
 function [numDrones,detect] = scouting(vine,t,A)
     ScoutSpeed = 0.1;
     numDrones = 5;
-    size = max(40*ScoutSpeed^2/4*pi,2);
+    size = max([40*ScoutSpeed^2/4*pi pi]);
     numPoints = ScoutSpeed * 3600;
 for j = 1:numDrones
     Sy = (j*9)-4;

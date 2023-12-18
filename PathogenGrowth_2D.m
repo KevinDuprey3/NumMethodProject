@@ -46,6 +46,8 @@ function [vine,cost,timeDetect] = PathogenGrowth_2D(vine,beta_max,mu_L_target,mu
 
 totDrones = 0;
 detect = false;
+cost = 0;
+timeDetect = 0;
 
 %declare global variables
 global NpX NpY Nsteps
@@ -154,19 +156,21 @@ for t=2:Nsteps
     %%%        RECOMMENDED LOCATION FOR YOUR SCOUTING ROUTINE           %%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    day = (t-1)/24;
+    day = tspan(t);
     if round(day) == day && ~detect
         [drones,detect] = scouting(vine,t,A);
         totDrones = totDrones + drones;
         if detect
-            timeDetect = idx/24;
-            cost = totDrones * timeDetect*24 + (timeDetect-10)*1000;
-            fprintf('\ncost found\n');
-            break;
+            if day < 10
+                timeDetect = day;
+                cost = totDrones * timeDetect;
+                fprintf('\ncost found = %.2f\n',cost);
+            else
+                timeDetect = day;
+                cost = totDrones * timeDetect + (timeDetect-10)*1000;
+                fprintf('\ncost found = %.2f\n',cost);
+            end
         end
-    else
-        cost = NaN;
-        timeDetect = NaN;
     end
 
     
