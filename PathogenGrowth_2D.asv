@@ -154,17 +154,21 @@ for t=2:Nsteps
     %%%        RECOMMENDED LOCATION FOR YOUR SCOUTING ROUTINE           %%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    day = int8(t)/24;
-    if isinteger(day) && ~detect
-        [drones,detect] = scouting(vine,t);
+    day = (t-1)/24;
+    if round(day) == day && ~detect
+        [drones,detect] = scouting(vine,t,A);
         totDrones = totDrones + drones;
         if detect
             timeDetect = idx;
             cost = totDrones * timeDetect*24 + (timeDetect-10)*1000;
+            fprintf('\n\n\n\n\ncost found');
+            break;
         end
+    else
+        cost = NaN;
+        timeDetect = NaN;
     end
-        cost = 0;
-        timeDetect = 0;
+
     
 end
     

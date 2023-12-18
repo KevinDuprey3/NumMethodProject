@@ -13,8 +13,8 @@ global NpX NpY Nsteps
 % set simulation constants
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% Global domain constants (apply everywhere) %%%%%%%%%%%%%%%%%
-NpX = 5;     %number of plants in the X-direction
-NpY = 5;     %number of plants in the Y-direction
+NpX = 50;     %number of plants in the X-direction
+NpY = 50;     %number of plants in the Y-direction
 Nsteps = length(T); %number of time steps for integration
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Global plant parameters %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,6 +106,25 @@ plot(tspan,B_ave/A);
 plot(tspan,E_ave);
 plot(tspan,F_ave);
 legend('Susceptible','Latent','Infected','Removed','Population','Berries','External','Fungal Spores','Location','NorthWest');
+hold off;
 
+figure;plot(tspan,vine(RandV).S,'-k','LineWidth',2);
+xlabel('time (days)','Fontsize',FSize);
+ylabel('Population (fraction of initial)','Fontsize',FSize)
+title('initially infected population')
+set(gca,'Fontsize',FSize,'Xlim',[0 61]); 
+box on;grid on
+hold on;
+plot(tspan,vine(RandV).L);
+plot(tspan,vine(RandV).I)
+plot(tspan,vine(RandV).R);
+plot(tspan,vine(RandV).P/A);
+plot(tspan,vine(RandV).B/A);
+plot(tspan,vine(RandV).E);
+plot(tspan,vine(RandV).F);
+legend('Susceptible','Latent','Infected','Removed','Population','Berries','External','Fungal Spores','Location','NorthWest');
+hold off; 
+
+fprintf('Cost = %.2f, time to detection = %.2f',cost,timeDetect);
 %INSERT YOUR CODE HERE to add plotting of other elements and optional
 %things like movies

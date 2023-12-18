@@ -1,17 +1,48 @@
-function [numDrones,detect] = scouting(vine,t)
+function [numDrones,detect] = scouting(vine,t,A)
+    ScoutSpeed = 0.1;
+    numDrones = 5;
+    size = max(40*ScoutSpeed^2/4*pi,2);
+    numPoints = ScoutSpeed * 3600;
+for j = 1:numDrones
+    Sy = (j*9)-4;
+    Sx = 1; ScTime = 0;
+    x = 0; y = 0;
+    state = 1;
+    for i = 1:numPoints
+    
+        switch state
+            case 1
+                if Sx > 45
+                    state = -1;
+                    Sy = Sy + 1;
+                end
+                Sx = Sx + state;
 
-    numDrones = 1;
-    diam = (0.5 * 20)/10;
-    size = pi*(diam/2)^2;
-    for i = 1:25
-        for j = 1:25
-
-            if vine(i).I(j) >= size
-                detect = true;
-            else
-                detect = false;
-            end
+            case -1
+                if Sx < 5
+                    state = 1;
+                    Sy = Sy + 1;
+                end
+                Sx = Sx + state;
         end
+            
+            cnt = Sx + (Sy-1)*50;
+
+            ScDistance = sqrt((x-vine(cnt).X)^2 + (y-vine(cnt).Y)^2);
+            ScTime = ScTime + ScDistance/ScoutSpeed;
+            x = vine(cnt).X;
+            y = vine(cnt).Y;
+            if ScTime <= 3600
+                infected = vine(cnt).L(t)*A;
+                if infected >= size 
+                    detect = true;
+                    return;
+                else
+                    detect = false;
+                end
+            else
+                break;
+            end
     end
 
 end
